@@ -180,7 +180,11 @@ rescue Puppet::ExecutionFailure
   end
 
   def restart
-    svc "-t", self.service
+    if (@resource[:restart].instance_of? String)
+      @resource[:restart], self.service
+    else 
+      svc "-t", self.service
+    end
   end
 
   def start
